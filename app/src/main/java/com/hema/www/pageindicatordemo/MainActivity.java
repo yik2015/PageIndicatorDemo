@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             "http://h.hiphotos.baidu.com/image/pic/item/11385343fbf2b2117c2dc3c3c88065380cd78e38.jpg",
             "http://c.hiphotos.baidu.com/image/pic/item/3801213fb80e7bec5ed8456c2d2eb9389b506b38.jpg"};
 
-    private ImageView image;
+    private ImageView naviImg;
     private View item;
     private MyAdapter adapter;
 
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         List<View> list = new ArrayList<>();
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < indicator_imgs.length; i++) {
             item = inflater.inflate(R.layout.item, null);
             ((TextView) item.findViewById(R.id.text)).setText("ViewPager # " + i);
             list.add(item);
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         ImageView imgView;
         View v = findViewById(R.id.page_indicator);
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < indicator_imgs.length; i++) {
             imgView = new ImageView(this);
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(10, 10);
@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
-
     private ScheduledExecutorService scheduledExecutorService;
 
     @Override
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
         scheduledExecutorService.scheduleWithFixedDelay(new PageSlideTask(curIdx, viewPager,
-                indicator_imgs.length), 4, 4, TimeUnit.SECONDS);
+                indicator_imgs.length), 10, 10, TimeUnit.SECONDS);
     }
 
     private class MyAdapter extends PagerAdapter {
@@ -154,18 +153,17 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                         @Override
                         public void imageLoaded(Drawable drawable, String imgUrl) {
                             View view = mList.get(position);
-                            image = (ImageView) view.findViewById(R.id.image);
-                            image.setBackground(drawable);
+                            naviImg = (ImageView) view.findViewById(R.id.image);
+                            naviImg.setBackground(drawable);
 
                             container.removeView(mList.get(position));
                             container.addView(mList.get(position));
-
                         }
                     });
 
             View view = mList.get(position);
-            image = (ImageView) view.findViewById(R.id.image);
-            image.setBackground(cachedImg);
+            naviImg = (ImageView) view.findViewById(R.id.image);
+            naviImg.setBackground(cachedImg);
 
             container.removeView(mList.get(position));
             container.addView(mList.get(position));

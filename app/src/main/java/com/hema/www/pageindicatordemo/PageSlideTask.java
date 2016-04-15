@@ -27,7 +27,7 @@ public class PageSlideTask implements Runnable {
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            viewPager.setCurrentItem(position);
+            viewPager.setCurrentItem(position, true);
         }
     };
 }
